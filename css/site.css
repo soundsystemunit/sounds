@@ -1,0 +1,85 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: sans-serif;
+	font-size: 11pt;
+	margin: 8px;
+}
+
+fieldset {
+	break-inside: avoid;
+	line-height: 1.6;
+	margin: 8px auto;
+	width: 407px;
+}
+
+fieldset fieldset {
+	border-style: solid;
+	border-width: 1px;
+	width: 100%;
+}
+
+input[type=range] {
+	vertical-align: middle;
+}
+
+legend {
+	font-family: fantasy;
+}
+
+td {
+	vertical-align: top;
+}
+
+#controls {
+	display: none;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	min-height: calc(100vh - 16px);
+}
+
+#main-controls {
+	column-fill: auto;
+	column-width: 407px;
+	column-gap: 2vw;
+}
+
+#recording-device select {
+	width: 324px;
+}
+
+#graph-canvas {
+	width: 100%;
+}
+
+.control-value {
+	font-size: smaller;
+}
+
+.flip-x {
+	transform: scaleX(-1);
+}
+
+.icon {
+	width: 16px;
+	height: 16px;
+}
+
+.hidden {
+	display: none;
+}
+
+.readout {
+    background-color: #eee;
+    color: #00A;
+    display: inline-block;
+	font-family: monospace;
+    font-size: 90%;
+    font-weight: 900;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    text-align: center;
+    min-width: 2em;
+}

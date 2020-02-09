@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<title>ORSSUM: Online Retro Synthesizer &amp; Sequencer for Unleashing Music</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, shrink-to-fit=no">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/sample-editor.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+		<script src="js/synth.js" defer></script>
+		<script src="js/input.js" defer></script>
+		<script src="frontend/sample-editor.js" defer></script>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<nav>
+				<ul class="nav">
+					<li class="nav-item my-1">
+						<a class="nav-link" href="index.html">Synthesizer</a>
+					</li>
+					<li class="nav-item my-1">
+						<a class="nav-link" href="https://github.com/elizabethhudnott/sound-synth/issues" target="_blank">Bugs</a>
+					</li>
+					<li class="nav-item" style="margin-top: 0.7rem;">
+						<iframe src="https://www.facebook.com/plugins/like.php?href=https%3A%2F%2Fwww.facebook.com%2FOrssum&width=122&layout=button&action=like&size=large&show_faces=false&share=true&height=65&appId" width="122" height="29" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+					</li>
+					<li class="nav-item m-2">
+						<a href="https://www.patreon.com/bePatron?u=23440273" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+					</li>
+				</ul>
+			</nav>
+			<div id="sample-editor">
+				<input type="file" id="sample-upload-input" accept="audio/*,.8svx,.iff,.raw" hidden>
+				<div class="btn-toolbar bg-secondary p-1" role="toolbar" aria-label="Sample editing toolbar">
+					<div class="btn-group mr-2" role="group" aria-label="File">
+						<button id="btn-upload-sample" type="button" class="btn btn-light" title="Open">
+							<img src="img/open.png">
+						</button>
+						<button id="btn-download-sample" type="button" class="btn btn-light" title="Save">
+							<img src="img/save.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Playback">
+						<button id="btn-play-sample" type="button" class="btn btn-light" title="Play sample">
+							<img src="img/play.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Zoom">
+						<button id="btn-zoom-sample-in" type="button" class="btn btn-light" title="Zoom in">
+							<img src="img/zoom-in.png">
+						</button>
+						<button id="btn-zoom-sample-out" type="button" class="btn btn-light" title="Zoom out">
+							<img src="img/zoom-out.png">
+						</button>
+						<button id="btn-zoom-sample-selection" type="button" class="btn btn-light" title="Zoom to selection">
+							<img src="img/zoom-selection.png">
+						</button>
+						<button id="btn-zoom-sample-all" type="button" class="btn btn-light" title="Show whole sample">
+							<img src="img/zoom-1.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Selection">
+						<button id="btn-zero-crossing" type="button" class="btn btn-light" title="Find zero crossing">
+							<div style="font-size: 32px; font-weight: bold; line-height: 1; width: 32px; height: 32px;">0</div>
+						</button>
+						<button id="btn-cut-sample" type="button" class="btn btn-light" title="Cut">
+							<img src="img/cut.png">
+						</button>
+						<button id="btn-copy-sample" type="button" class="btn btn-light" title="Copy">
+							<img src="img/copy.png">
+						</button>
+						<button id="btn-paste-sample" type="button" class="btn btn-light" title="Paste">
+							<img src="img/paste.png">
+						</button>
+						<button id="btn-swap-sample" type="button" class="btn btn-light" title="Swap with clipboard">
+							<img src="img/swap.png">
+						</button>
+						<button id="btn-mix-sample" type="button" class="btn btn-light" title="Paste mixed">
+							<img src="img/mixer.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Amplitude">
+						<button id="btn-remove-dc" type="button" class="btn btn-light" title="Remove DC offset">
+							<img src="img/remove-offset-small.png">
+						</button>
+						<button id="btn-normalize-sample" type="button" class="btn btn-light" title="Normalize">
+							<img src="img/normalize.png">
+						</button>
+						<button id="btn-silence-sample" type="button" class="btn btn-light" title="Make Silence">
+							<img src="img/mute.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Transformations">
+						<button id="btn-flip-sample" type="button" class="btn btn-light" title="Flip polarity">
+							<img src="img/polarity-flip.png">
+						</button>
+						<button id="btn-reverse-sample" type="button" class="btn btn-light" title="Reverse">
+							<img src="img/reverse.png">
+						</button>
+						<button id="btn-ping-pong" type="button" class="btn btn-light" title="Ping pong">
+							<img src="img/ping-pong.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Stereo" id="btns-stereo-sample">
+						<button id="btn-stereo-sep-sample" type="button" class="btn btn-light" title="Adjust stereo separation">
+							<img src="img/boombox.svg">
+						</button>
+						<button id="btn-mono-sample" type="button" class="btn btn-light" title="Reduce to mono">
+							<img src="img/radio.png">
+						</button>
+					</div>
+					<div class="btn-group mr-2" role="group" aria-label="Distortion">
+						<button id="btn-quantize-sample" type="button" class="btn btn-light" title="Quantize">
+							<img src="img/quantize.png">
+						</button>
+						<button id="btn-resample-sample" type="button" class="btn btn-light" title="Resample">
+							<img src="img/resample.png">
+						</button>
+					</div>
+				</div>
+
+				<div id="waveform-outer-container" class="my-1">
+					<div id="waveform-container">
+						<div id="waveform-inner-container" aria-haspopup="true">
+							<canvas id="waveform" height="258"></canvas>
+							<!-- 24px header -->
+							<canvas id="waveform-overlay" height="282" tabindex="0" class="no-focus-outline"></canvas>
+
+							<div class="dropdown-menu pt-0 fade" id="s-editor-context-menu">
+								<button class="dropdown-item btn-sm" id="s-editor-menu-cut">
+									<img src="img/cut.png" class="mr-1" width="16">
+									Cut
+								</button>
+								<button class="dropdown-item btn-sm" id="s-editor-menu-copy">
+									<img src="img/copy.png" class="mr-1" width="16">
+									Copy
+								</button>
+								<button class="dropdown-item btn-sm" id="s-editor-menu-paste">
+									<img src="img/paste.png" class="mr-1" width="16">
+									Paste
+								</button>
+								<button class="dropdown-item btn-sm" id="s-editor-menu-mix">
+									<img src="img/mixer.png" class="mr-1" width="16">
+									Paste mixed
+								</button>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="insert-silence-modal" class="modal fade" tabindex="-1" role="dialog" aria-label="Insert Silence">
+		  <div class="modal-dialog" role="document">
+		    <form id="insert-silence-form" class="modal-content bg-dark text-white">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Insert Silence</h5>
+		        <button type="button" class="close text-white-50" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="form-row">
+		      		<div class="col-1"></div>
+		      		<div class="col-3 col-form-label">
+		      			<label for="silence-length">Length</label>
+		      		</div>
+		      		<div class="col-7">
+		      			<div class="input-group flex-nowrap">
+		        			<input id="silence-length" type="number" min="0.00002" step="0.00002" placeholder="Number of Seconds">
+		        			<div class="input-group-append">
+		        				<span class="input-group-text">seconds</span>
+		        			</div>
+		        		</div>
+		        	</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary">Insert</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+
+		<div id="stereo-separation-modal" class="modal fade" tabindex="-1" role="dialog" aria-label="Stereo Separation">
+		  <div class="modal-dialog" role="document">
+		    <form id="stereo-separation-form" class="modal-content bg-dark text-white">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Adjust Stereo Separation</h5>
+		        <button type="button" class="close text-white-50" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="form-row">
+		      		<div class="col-3">
+		      			Swapped
+		      		</div>
+		      		<div class="col-6 text-center">
+		      			Equal
+		      		</div>
+		      		<div class="col-3 text-right">
+		      			Unchanged
+		      		</div>
+		      	</div>
+		      	<div class="form-row">
+		      		<div class="col-1"></div>
+		      		<div class="col-10 px-0">
+	        			<input id="stereo-separation" type="range" min="-1" max="1" value="1" step="any" list="plus-minus-one-ticks" class="form-control-range">
+	        			<datalist id="plus-minus-one-ticks">
+	        				<option value="-1">
+	        				<option value="-0.75">
+	        				<option value="-0.5">
+	        				<option value="-0.25">
+	        				<option value="0">
+	        				<option value="0.25">
+	        				<option value="0.5">
+	        				<option value="0.75">
+	        				<option value="1">
+	        			</datalist>
+		        	</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary">Adjust</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+
+		<div id="reduce-to-mono-modal" class="modal fade" tabindex="-1" role="dialog" aria-label="Reduce to Mono">
+		  <div class="modal-dialog" role="document">
+		    <form id="reduce-to-mono-form" class="modal-content bg-dark text-white">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Reduce to Mono</h5>
+		        <button type="button" class="close text-white-50" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="form-row">
+		      		<div class="col-4"></div>
+		      		<div class="col-7">
+		      			<div class="form-check pb-2">
+			      			<input class="form-check-input" type="radio" name="mono-reduce-type" id="mono-reduce-left" value="left">
+			      			<label class="form-check-label" for="mono-reduce-left">Keep left</label>
+			      		</div>
+		      			<div class="form-check pb-2">
+			      			<input class="form-check-input" type="radio" name="mono-reduce-type" id="mono-reduce-right" value="right">
+			      			<label class="form-check-label" for="mono-reduce-right">Keep right</label>
+		      			</div>
+		      			<div class="d-flex pb-2 align-items-center">
+		      				<div class="form-check mr-3">
+				      			<input class="form-check-input" type="radio" name="mono-reduce-type" id="mono-reduce-mix" value="mix" checked>
+				      			<label class="form-check-label" for="mono-reduce-mix">Mix channels</label>
+				      		</div>
+				      		<div class="flex-grow-1">
+								<input id="mono-reduce-balance" type="range" min="0" max="1" step="any" class="form-control-range" aria-label="Balance" list="centre-half-tick">
+								<datalist id="centre-half-tick">
+									<option value="0.5">
+								</datalist>
+				      		</div>
+		      			</div>
+		        	</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary">Reduce</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+
+		<div id="quantize-modal" class="modal fade" tabindex="-1" role="dialog" aria-label="Quantize">
+		  <div class="modal-dialog" role="document">
+		    <form id="quantize-form" class="modal-content bg-dark text-white">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Quantize</h5>
+		        <button type="button" class="close text-white-50" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="form-row">
+		      		<div class="col-1"></div>
+		      		<div class="col-3 col-form-label">
+		      			<label for="quantize-bit-depth">Bit Depth</label>
+		      		</div>
+		      		<div class="col-6">
+		      			<div class="input-group flex-nowrap">
+				        	<input id="quantize-bit-depth" class="form-control" type="number" min="2" max="24" value="8" required placeholder="Bit Depth">
+				        	<div class="input-group-append">
+				        		<span class="input-group-text">bits</span>
+				        	</div>
+				        </div>
+		      		</div>
+		      	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary">Quantize</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+
+		<div id="resample-modal" class="modal fade" tabindex="-1" role="dialog" aria-label="Resample">
+		  <div class="modal-dialog" role="document">
+		    <form id="resample-form" class="modal-content bg-dark text-white">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Resample</h5>
+		        <button type="button" class="close text-white-50" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="form-row form-group">
+		      		<div class="col-1"></div>
+		      		<div class="col-3 col-form-label">
+		      			<label for="resample-rate">Sample Rate</label>
+		      		</div>
+		      		<div class="col-7">
+				        <input id="resample-rate" class="form-control" type="number" min="8000" max="96000" list="sample-rates" required placeholder="Sample Rate">
+				        <datalist id="sample-rates"></datalist>
+				    </div>
+				    <div class="col-1"></div>
+			    </div>
+			    <div class="form-row form-group">
+			    	<div class="col-1"></div>
+			    	<div class="col-3">
+			    		Anti-Aliasing
+			    	</div>
+			    	<div class="col-3 text-right">
+			    		<div class="form-check form-check-inline">
+			    			<input class="form-check-input" type="radio" name="resample-antialiasing" id="resample-antialias-on" value="1" checked>
+			    			<label class="form-check-label" for="resample-antialias-on">On</label>
+			    		</div>
+			    	</div>
+			    	<div class="col-3 text-center">
+			    		<div class="form-check form-check-inline">
+			    			<input class="form-check-input" type="radio" name="resample-antialiasing" id="resample-antialias-off" value="0">
+			    			<label class="form-check-label" for="resample-antialias-off">Off</label>
+			    		</div>
+			    	</div>
+			    </div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+		        <button type="submit" class="btn btn-primary">Resample</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
+	</body>
+</html>

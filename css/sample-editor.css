@@ -1,0 +1,44 @@
+body {
+	background: black;
+	color: white;
+}
+
+#waveform-outer-container {
+	overflow-x: auto;
+}
+
+#waveform-container {
+	height: 285px;
+}
+
+#waveform-inner-container {
+	position: fixed;
+}
+
+#waveform {
+	background: MidnightBlue;
+	top: 24px;
+	position: absolute;
+}
+
+#waveform-overlay {
+	position: absolute;
+	touch-action: none;
+}
+
+.no-focus-outline:focus {
+	outline: none;
+}
+
+.dropdown-menu.fade:not(.show) {
+	pointer-events: none;
+}
+
+.dropdown-menu.fade {
+	display: block;
+	pointer-events: auto;
+}
+
+.dropdown-menu button {
+	cursor: default;
+}
